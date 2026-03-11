@@ -1,0 +1,23 @@
+# Secrets
+.env
+
+# Binary output
+bin/
+
+# Log files
+*.log
+
+# Snapshot codebase (generated)
+codebase_*.txt
+
+# Scripts generate snapshot (internal tooling)
+generate_codebase.sh
+output_codebase.sh
+
+# AI internal docs (PR tasks, task logs — bukan untuk publik)
+docs/ai/PR/
+docs/ai/tasks/
+docs/ai/result_behave/
+
+# OS
+.DS_Store
