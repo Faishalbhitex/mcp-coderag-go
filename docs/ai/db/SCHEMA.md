@@ -16,7 +16,7 @@ Selalu rujuk file ini sebelum menulis SQL query atau mengubah pipeline indexing.
 | `chunk_type` | `text` | NOT NULL | Nilai: `Function`, `Method`, `Struct`, `Interface` |
 | `content` | `text` | NOT NULL | Source code asli |
 | `doc_comment` | `text` | | Komentar dokumentasi Go di atas deklarasi |
-| `embedding` | `vector(3072)` | | Vektor dari `gemini-embedding-001` |
+| `embedding` | `vector(1536)` | | Vektor dari `gemini-embedding-001` (Dimensi diturunkan agar index HNSW pgvector < 2000) |
 | `content_tsv` | `tsvector` | | Full-text search index (ditambahkan di migration 002) |
 
 ## 2. Indexes

@@ -87,12 +87,17 @@ fi
 
 DB_URL="postgres://$DB_USER:$DB_PASS@127.0.0.1:5432/$DB_NAME"
 
-info "Menjalankan migration 001..."
+info "Menjalankan migration 000 (create table)..."
+psql "$DB_URL" -f "$MIGRATION_DIR/000_create_table.sql" \
+    && ok "Migration 000 selesai" \
+    || warn "Migration 000 gagal — cek error di atas"
+
+info "Menjalankan migration 001 (update schema)..."
 psql "$DB_URL" -f "$MIGRATION_DIR/001_update_schema.sql" \
     && ok "Migration 001 selesai" \
     || warn "Migration 001 gagal (mungkin sudah pernah dijalankan)"
 
-info "Menjalankan migration 002..."
+info "Menjalankan migration 002 (hybrid search)..."
 psql "$DB_URL" -f "$MIGRATION_DIR/002_add_hybrid_search.sql" \
     && ok "Migration 002 selesai" \
     || warn "Migration 002 gagal (mungkin sudah pernah dijalankan)"

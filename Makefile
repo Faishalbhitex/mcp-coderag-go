@@ -96,6 +96,7 @@ db-migrate:
 	@if [ -z "$$DB_URL" ]; then \
 		export $$(grep -v '^#' .env | xargs) 2>/dev/null; \
 	fi; \
+	psql $$DB_URL -f migrations/000_create_table.sql && \
 	psql $$DB_URL -f migrations/001_update_schema.sql && \
 	psql $$DB_URL -f migrations/002_add_hybrid_search.sql
 	@echo "✓ Migration selesai"
