@@ -30,7 +30,7 @@ Asumsi: Go, Git, Make sudah terinstall (`pkg install golang git make`).
 
 ```bash
 # 1. Clone
-git clone https://github.com/user/mcp-coderag-go
+git clone https://github.com/Faishalbhitex/mcp-coderag-go
 cd mcp-coderag-go
 
 # 2. Cek dependency
@@ -62,7 +62,7 @@ Asumsi: PostgreSQL dan pgvector sudah terinstall dan running.
 
 ```bash
 # 1. Clone dan setup .env
-git clone https://github.com/user/mcp-coderag-go
+git clone https://github.com/Faishalbhitex/mcp-coderag-go
 cd mcp-coderag-go
 cp .env.example .env
 # Edit .env: isi GOOGLE_API_KEY dan DB_URL
@@ -86,7 +86,7 @@ make configure-mcp
 
 ### 1. Clone dan setup environment
 ```bash
-git clone https://github.com/user/mcp-coderag-go
+git clone https://github.com/Faishalbhitex/mcp-coderag-go
 cd mcp-coderag-go
 cp .env.example .env
 # Edit .env: isi GOOGLE_API_KEY dan DB_URL

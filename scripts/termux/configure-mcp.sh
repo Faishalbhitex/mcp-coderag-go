@@ -44,24 +44,24 @@ EOF
 # ── Claude Code ───────────────────────────────────────────────────────────────
 step "2/2 — Claude Code (claude mcp add)"
 echo ""
-echo -e "Jalankan perintah berikut untuk menambahkan MCP server ke Claude Code:"
+echo "Jalankan perintah berikut untuk menambahkan MCP server ke Claude Code:"
 echo ""
-echo -e "${CYAN}claude mcp add coderag \\${NC}"
-echo -e "${CYAN}  --scope user \\${NC}"
-echo -e "${CYAN}  -e GOOGLE_API_KEY=\$GOOGLE_API_KEY \\${NC}"
-echo -e "${CYAN}  -e DB_URL=\$DB_URL \\${NC}"
-echo -e "${CYAN}  -e GEMINI_EMBED_MODEL=gemini-embedding-001 \\${NC}"
-echo -e "${CYAN}  -- mcp-coderag serve${NC}"
+printf 'claude mcp add coderag \\\n'
+printf '  --scope user \\\n'
+printf '  -e GOOGLE_API_KEY=$GOOGLE_API_KEY \\\n'
+printf '  -e DB_URL=$DB_URL \\\n'
+printf '  -e GEMINI_EMBED_MODEL=gemini-embedding-001 \\\n'
+printf '  -- mcp-coderag serve\n'
 echo ""
 echo -e "Atau tambahkan ke ${CYAN}~/.claude.json${NC} di dalam ${BOLD}\"mcpServers\"${NC}:"
 echo ""
-cat << EOF
+cat << 'EOF'
     "coderag": {
       "command": "mcp-coderag",
       "args": ["serve"],
       "env": {
-        "GOOGLE_API_KEY": "\$GOOGLE_API_KEY",
-        "DB_URL": "\$DB_URL"
+        "GOOGLE_API_KEY": "$GOOGLE_API_KEY",
+        "DB_URL": "$DB_URL"
       }
     }
 EOF
