@@ -13,22 +13,28 @@ echo -e "${BOLD}║   Setup Environment Variables (Termux)   ║${NC}"
 echo -e "${BOLD}╚══════════════════════════════════════════╝${NC}\n"
 
 BASHRC="$HOME/.bashrc"
+GOPATH_DIR="$HOME/go"
 
-add_if_missing() {
-    local line="$1"
-    local desc="$2"
-    if grep -qF "$line" "$BASHRC" 2>/dev/null; then
-        ok "$desc sudah ada di .bashrc"
-    else
-        echo "$line" >> "$BASHRC"
-        ok "$desc ditambahkan ke .bashrc"
-    fi
-}
-
-# ── Step 1: Go paths ──────────────────────────────────────────────────────────
+# ── Step 1: Go PATH ───────────────────────────────────────────────────────────
 step "1/3 — Go PATH"
-add_if_missing 'export GOPATH=$HOME/go' "GOPATH"
-add_if_missing 'export PATH=$PATH:$GOPATH/bin' "GOPATH/bin di PATH"
+
+# Cek GOPATH
+if grep -q "GOPATH" "$BASHRC" 2>/dev/null; then
+    ok "GOPATH sudah ada di .bashrc"
+else
+    echo "export GOPATH=$GOPATH_DIR" >> "$BASHRC"
+    ok "GOPATH ditambahkan ke .bashrc"
+fi
+
+# Cek apakah $HOME/go/bin sudah ada di PATH (dalam bentuk apapun)
+# Cek literal: $HOME/go/bin, $GOPATH/bin, atau path absolut
+GOBIN_PATTERN="export PATH=\$PATH:\$GOPATH/bin"
+if grep -qF "$GOBIN_PATTERN" "$BASHRC" 2>/dev/null; then
+    ok "GOPATH/bin sudah ada di PATH (.bashrc)"
+else
+    echo 'export PATH=$PATH:$GOPATH/bin' >> "$BASHRC"
+    ok "GOPATH/bin ditambahkan ke PATH"
+fi
 
 # ── Step 2: API Key ───────────────────────────────────────────────────────────
 step "2/3 — Google API Key"
