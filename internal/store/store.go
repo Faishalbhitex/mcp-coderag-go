@@ -51,11 +51,13 @@ func (s *Store) UpsertChunk(ctx context.Context, chunk chunker.Chunk) error {
 	)
 
 	content := genai.NewContentFromText(textToEmbed, genai.RoleUser)
+	dim := int32(1536)
 	result, err := s.GenAI.Models.EmbedContent(ctx, s.EmbedModel,
 		[]*genai.Content{content},
 		&genai.EmbedContentConfig{
-			TaskType: "RETRIEVAL_DOCUMENT",
-			Title:    fmt.Sprintf("Code Chunk: %s", chunk.ID),
+			TaskType:             "RETRIEVAL_DOCUMENT",
+			Title:                fmt.Sprintf("Code Chunk: %s", chunk.ID),
+			OutputDimensionality: &dim,
 		})
 	if err != nil {
 		return fmt.Errorf("store: embed gagal (%s): %w", chunk.ID, err)

@@ -68,9 +68,13 @@ func NewSearcher(conn *pgx.Conn, genaiClient *genai.Client, embedModel string) *
 func (s *Searcher) Search(ctx context.Context, query string, topK int, threshold float64) ([]Result, error) {
 	// Embed query untuk semantic search
 	qContent := genai.NewContentFromText(query, genai.RoleUser)
+	dim := int32(1536)
 	qResult, err := s.genai.Models.EmbedContent(ctx, s.embedModel,
 		[]*genai.Content{qContent},
-		&genai.EmbedContentConfig{TaskType: "CODE_RETRIEVAL_QUERY"})
+		&genai.EmbedContentConfig{
+			TaskType:             "CODE_RETRIEVAL_QUERY",
+			OutputDimensionality: &dim,
+		})
 	if err != nil {
 		return nil, fmt.Errorf("rag: embed query gagal: %w", err)
 	}
