@@ -14,14 +14,14 @@ Skill ini memandu penggunaan tool `gocoderag` untuk eksplorasi codebase Go secar
 ## Kapan Menggunakan Skill Ini
 - Saat baru pertama kali masuk ke project Go yang belum dikenal.
 - Saat mencari implementasi fitur tertentu berdasarkan konsep (misal: "authentication", "database connection").
-- Saat mencari fungsi atau struct dengan nama yang sudah diketahui (misal: "UpsertChunk").
+- Saat mencari fungsi atau struct dengan nama yang sudah diketahui (misal: "<FunctionName>").
 - Saat ingin memahami hubungan antar komponen tanpa harus membuka banyak file sekaligus.
 
 ## Urutan Tool yang Disarankan
 Untuk eksplorasi yang efektif, ikuti alur berikut:
 1. **`list_packages`**: Gunakan di awal untuk melihat "peta" project (paket apa saja yang ada).
 2. **`search_code`**: Gunakan kueri (konseptual atau nama eksak) untuk menemukan titik awal logika.
-3. **`get_chunk`**: Gunakan ID dari hasil pencarian (format `package.Name`) untuk membaca detail implementasi.
+3. **`get_chunk`**: Gunakan ID dari hasil pencarian (format `<package>.<FunctionName>`) untuk membaca detail implementasi.
 4. **`search_by_file`**: Gunakan jika butuh melihat semua fungsi/struct dalam satu file secara berurutan.
 
 ## Panduan Per Tool
@@ -35,13 +35,15 @@ Memberikan gambaran makro. Fokus pada jumlah chunk dan daftar file untuk menilai
 - **Threshold**: Abaikan hasil dengan skor di bawah 0.01 karena kemungkinan besar tidak relevan (false positive semantik).
 
 ### get_chunk
-Cara tercepat untuk membaca kode satu fungsi tanpa noise. Gunakan ID `package.Name` yang didapat dari `search_code`.
+Cara tercepat untuk membaca kode satu fungsi tanpa noise. Gunakan ID `<package>.<FunctionName>` yang didapat dari `search_code`.
+**Note**: ID selalu berasal dari hasil `search_code`, jangan mencoba menebak format ID secara manual.
 
 ### search_by_file
-Berguna untuk memahami struktur satu file secara utuh (misal: melihat struct dan constructor-nya sekaligus).
+Berguna untuk memahami struktur satu file secara utuh (misal: melihat struct dan constructor-nya sekaligus). Contoh path: `internal/<package>/<file>.go`.
 
 ### reindex
 WAJIB dipanggil segera setelah melakukan modifikasi file (`write_file` atau `replace`) agar database tetap sinkron dengan file fisik.
+**Note**: Jika `./...` gagal (terlalu besar atau timeout), pecah pemanggilan per subdirektori (misal: `./internal/store/...`).
 
 ## Interpretasi Hasil
 - **Skor RRF tinggi (> 0.03)**: Sangat akurat, biasanya kecocokan nama eksak.
